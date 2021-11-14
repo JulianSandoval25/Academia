@@ -1,0 +1,65 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="UI.Web.Site" %>
+
+<!DOCTYPE html>
+
+<html xmins="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Academia</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link href="Styles/SiteMaster.css" rel="stylesheet" media="screen" type="text/css"/>
+    <link href="Styles/abmStyle.css" rel="stylesheet" />
+</head>
+<body>
+    <form id="bodyForm" runat="server">
+        <% if (Session["UsuarioActual"] != null) {%>
+   <!--   <asp:Menu runat="server" ID="menu" DataSourceID="SiteMapDataSource"></asp:Menu>
+        <asp:SiteMapDataSource ID="SiteMapDataSource" runat="server" />  -->
+        <asp:Panel ID="Panel1" runat="server" align="right">
+        <asp:LinkButton ID="lbCerrarSesion" runat="server" onclick="lbCerrarSesion_Click" aling="right" BackColor="#3C4549" BorderColor="Black" BorderWidth="1px" ForeColor="White" >Cerrar Sesion</asp:LinkButton>
+            </asp:Panel>
+        <nav class="main-menu">
+        <ul class="nav"> 
+
+           
+            <ul>
+                <li><a href="Default.aspx">Inicio</a></li>
+             <% 
+                    Business.Entities.Persona PersonaActual  = (Business.Entities.Persona)Session["PersonaActual"];
+                    
+                    if (PersonaActual.TipoPersona == Business.Entities.Persona.Tipo.Alumno)
+                    {
+                          Response.Write("<li><a href='Inscripciones.aspx'>Inscripcion a Cursado</a></li>");
+                    }
+                    else if (PersonaActual.TipoPersona ==  Business.Entities.Persona.Tipo.Profesor)
+                        {
+                          Response.Write("<li><a href='RegistroCalificacion.aspx'>Registrar Notas</a></li>");
+                        }
+                        else if (PersonaActual.TipoPersona ==  Business.Entities.Persona.Tipo.Administrativo)
+                            {
+                              Response.Write("<li><a href='Usuarios.aspx'>Usuarios</a></li>");
+                              Response.Write("<li><a href='Planes.aspx'>Planes</a></li>");
+                              Response.Write("<li><a href='Materias.aspx'>Materias</a></li>");
+                              Response.Write("<li><a href='Especialidades.aspx'>Especialidades</a></li>");
+                              Response.Write("<li><a href='Comisiones.aspx'>Comision</a></li>");
+                              Response.Write("<li><a href='Cursos.aspx'>Curso</a></li>");
+                 
+                            //   Response.Write("<li><a href='Inscripciones.aspx'>Inscripcion a Cursado</a></li>");
+                              //  Response.Write("<li><a href='RegistroCalificacion.aspx'>Registrar Notas</a></li>");
+                                Response.Write("<li><a href='ReportePlanes.aspx'>Reporte Planes</a></li>");
+                                Response.Write("<li><a href='ReporteCursos.aspx'>Reporte Cursos</a></li>");
+                          }
+                 %>
+
+                </ul>
+        </ul>
+          <%} %>
+            </nav>
+        <div>
+            <asp:ContentPlaceHolder ID="bodyContentPlaceHolder" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>
